@@ -5,7 +5,7 @@ resource "aws_iam_group" "group1" {
 
 resource "aws_instance" "name" {
   ami           = data.aws_ami.ami1.id
-  instance_type = "t2.micro"
+  instance_type = "t3.small"
   key_name      = aws_key_pair.ec2_key.key_name
 
   depends_on = [aws_key_pair.ec2_key, aws_iam_group.group1]
