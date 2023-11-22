@@ -52,7 +52,7 @@ sudo wget -q https://jfrog.bintray.com/artifactory/jfrog-artifactory-oss-6.9.6.z
 sudo unzip -q jfrog-artifactory-oss-6.9.6.zip -d /opt/artifactory 1>/dev/null
 sudo chown -R artifactory: /opt/artifactory/*
 sudo rm -rf jfrog-artifactory-oss-6.9.6.zip
-echo "            -> Done"
+
 
 # Starting Artifactory Service
 echo "*****Starting Artifactory Service"
