@@ -1,17 +1,13 @@
 #!/bin/bash
 
-echo "\n################################################################"
-echo "#                                                              #"
-echo "#                     ***WELCOME***                            #"
-echo "#                 Artifactory  Installation                    #"
-echo "#                                                              #"
-echo "################################################################"
+
 
 # Installing necessary packages
 echo "\n\n*****Installing necessary packages"
 sudo apt-get update -y > /dev/null 2>&1
 sudo apt-get install -y default-jre unzip > /dev/null 2>&1
-echo "            -> Done"
+
+# Creating the jfrog service file for systemd
 
 cat <<EOF | sudo tee artifactory.service
 [Unit]
@@ -45,7 +41,6 @@ echo "*****Configuring Artifactory as a Service"
 sudo useradd -r -m -U -d /opt/artifactory -s /bin/false artifactory 2>/dev/null
 sudo cp artifactory.service /etc/systemd/system/artifactory.service
 sudo systemctl daemon-reload 1>/dev/null
-echo "            -> Done"
 
 
 # Downloading JFROG Artifactory 6.9.6 version to OPT folder
@@ -57,7 +52,7 @@ sudo wget -q https://jfrog.bintray.com/artifactory/jfrog-artifactory-oss-6.9.6.z
 sudo unzip -q jfrog-artifactory-oss-6.9.6.zip -d /opt/artifactory 1>/dev/null
 sudo chown -R artifactory: /opt/artifactory/*
 sudo rm -rf jfrog-artifactory-oss-6.9.6.zip
-echo "            -> Done"
+
 
 # Starting Artifactory Service
 echo "*****Starting Artifactory Service"
@@ -67,11 +62,9 @@ sudo systemctl enable artifactory
 
 # Check if Artifactory is working
 sudo systemctl is-active --quiet artifactory
-echo "\n################################################################ \n"
 if [ $? -eq 0 ]; then
 	echo "Artifactory installed Successfully"
 	echo "Access Artifactory using $(curl -s ifconfig.me):8081"
 else
 	echo "Artifactory installation failed"
 fi
-echo "\n################################################################ \n"
